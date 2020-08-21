@@ -41,7 +41,7 @@ _l = L * _lambda / 2
 _w = W * _lambda / 2
 
 # degree
-_N, _M = 50, 50
+_N, _M = 100, 100
 
 
 # be in real coordinate
@@ -94,7 +94,6 @@ p_rms = 2e-5
 array = np.abs(array)/p_rms
 
 array = 20 * np.log(array)
-
 
 contour = plt.contourf(array)
 
