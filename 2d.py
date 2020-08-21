@@ -1,6 +1,5 @@
 import numpy as np
-import matplotlib.pyplot  as plt
-from math import *
+import matplotlib.pyplot as plt
 
 # to get the distance of wave
 # y = kx + b

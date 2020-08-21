@@ -42,7 +42,7 @@ _l = L * _lambda / 2
 _w = W * _lambda / 2
 
 # degree
-_N, _M = 100, 100
+_N, _M = 50, 50
 
 
 # be in real coordinate
@@ -64,11 +64,16 @@ class F:
         self.b = b
         self.c = c
         self.points = []
-        for i in range(_N):
-            x, y = coordinate(i, 0)
-            if b != 0:
+        if b != 0:
+            for i in range(_M):
+                x, y = coordinate(i, 0)
                 y = - self.c/self.b - self.a*x/self.b
-            self.points.append([x, y])
+                self.points.append([x, y])
+        elif a != 0:
+            for j in range(_N):
+                x, y = coordinate(0, j)
+                x = - self.c / self.a - self.b * y / self.a
+                self.points.append([x, y])
 
 
 # wave sounder
@@ -79,8 +84,8 @@ f1 = F(0, 1, -_l)
 for i in range(_N):
     for j in range(_M):
         _x, _y = coordinate(i, j)
-        array[j][i] = wave_f(_x, _y, f0)
-        array[j][i] = wave_f(_x, _y, f1)
+        array[j][i] += wave_f(_x, _y, f0)/_M
+        array[j][i] += wave_f(_x, _y, f1)/_N
 
 array = array * rho * (pi * A ** 2 * w)
 
@@ -90,3 +95,4 @@ contour = plt.contourf(array)
 plt.colorbar(contour)
 
 plt.show()
+

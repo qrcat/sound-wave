@@ -69,7 +69,7 @@ array = np.cos(array)
 
 array = np.abs(array)
 
-contour = plt.contourf(array[:, 1, :])
+contour = plt.contourf(array[:, 4, :])
 
 plt.colorbar(contour)
 
