@@ -42,16 +42,13 @@ array = np.zeros((_N, _M))
 _l = L * _lambda / 2
 _w = W * _lambda / 2
 
-f1 = F(0, 1, 0)
-f2 = F(0, 1, -_l)
-f3 = F(1, 0, 0)
-f4 = F(1, 0, -_w)
+f1 = F(1, 1, 0)
+f2 = F(-1, 1, _w)
 
 for i in range(_N):
     for j in range(_M):
         _x, _y = axic(i, j)
-        array[j][i] += np.cos(_pi * ((f1.distance(_x, _y)+_lambda/2-f2.distance(_x, _y))/_lambda))
-        array[j][i] += np.cos(_pi * ((f3.distance(_x, _y)+_lambda/2-f4.distance(_x, _y))/_lambda))
+        array[j][i] += np.cos(_pi * ((f1.distance(_x, _y)-f2.distance(_x, _y))/_lambda))
 
 array = np.abs(array)
 
