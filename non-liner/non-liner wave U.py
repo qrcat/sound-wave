@@ -9,7 +9,7 @@ W = 5
 pi = 3.1415926
 
 # wave
-A = 1
+A = 0.6
 u = 343
 v = 40000
 _lambda = u / v
@@ -19,14 +19,14 @@ rho = 1.293
 
 
 # y = Acos(wt-2pi(sqrt(x^2+y^2+z^2))/lambda)
-# v = -Awsin^2(wt-2pi(sqrt(x^2+y^2+z^2))/lambda)
+# v = -Awsin(wt-2pi(sqrt(x^2+y^2+z^2))/lambda)
 #     cos 2x = (cos x)^2 - (sin x)^2 = 1 - 2(sin x)^2
 #     (sin x)^2 = (1 - cos 2x)/2
-#     v^2 = Aw(1-cos(2wt - 4pi(r)/lambda)/2
+#     v^2 = A^2*w^2(1-cos(2wt - 4pi(r)/lambda)/2
 # integral v^2 by time
-#     @v^2 = (1/2)AwT - Awsin(4pi-4pi(r)/lambda)/4 + Awsin(-4pi(r)/lambda)/4
-#          = (1/2)AwT + Awsin(4pi(r)/lambda)/4 - Awsin(4pi(r)/lambda)/4
-#          = (1/2)AwT
+#     @v^2 = (1/2)A^2*w^2T - Awsin(4pi-4pi(r)/lambda)/4 + Awsin(-4pi(r)/lambda)/4
+#          = A^2*w + Awsin(4pi(r)/lambda)/4 - Awsin(4pi(r)/lambda)/4
+#          = A^2*w
 # a = -Aw^2cos(wt-2pi(sqrt(x^2+y^2+z^2))/lambda)
 #      r = sqrt(x^2+y^2+z^2)
 # dv/dx = 2piAwcos(wt-2pi(r)/lambda)/lambda
@@ -96,7 +96,7 @@ array = array * rho * (pi * A ** 2 * w)
 
 
 # U = 2 * pi * R^3 (_p/3rhoc^2 - rho*v^2/2)
-array = 2 * pi * (array/(3*rho*u**2)-rho*0.5*A*w*T/2)
+array = 2 * pi * (np.abs(array)/(3*rho*u**2)-rho*A**2*w/2)
 
 
 contour = plt.contourf(array)
@@ -104,5 +104,7 @@ contour = plt.contourf(array)
 plt.colorbar(contour)
 
 plt.title("sound U")
+
+plt.text(1, 1, 'L={}lambda/2,W={}lambda/2'.format(L, W))
 
 plt.show()

@@ -9,7 +9,7 @@ W = 5
 pi = 3.1415926
 
 # wave
-A = 1
+A = 0.6
 u = 343
 v = 40000
 _lambda = u / v
@@ -93,5 +93,7 @@ contour = plt.contourf(array)
 plt.colorbar(contour)
 
 plt.title("sound pressure")
+
+plt.text(1, 1, 'L={}lambda/2,W={}lambda/2'.format(L, W))
 
 plt.show()
