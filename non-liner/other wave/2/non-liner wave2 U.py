@@ -1,10 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-# var
-L = 5
-W = 5
-
 # const var
 pi = 3.1415926
 
@@ -17,6 +13,10 @@ w = 2 * pi * v
 T = 2 * pi / w
 rho = 1.293
 
+# var
+L = 5
+W = 5
+fi = _lambda/2
 
 # y = Acos(wt-2pi(sqrt(x^2+y^2+z^2))/lambda)
 # v = -Awsin^2(wt-2pi(sqrt(x^2+y^2+z^2))/lambda)
@@ -42,6 +42,7 @@ def wave_f(x1, y1, f):
         theta += np.cos(4 * pi * np.sqrt((x1 - x) ** 2 + (y1 - y) ** 2) / _lambda)
     return theta
 
+
 # length
 _l = L * _lambda / 2
 _w = W * _lambda / 2
@@ -60,6 +61,7 @@ def coordinate(x, y):
 # create zero array
 array = np.zeros((_N, _M))
 array_v = np.zeros((_N, _M))
+
 
 # non-liner sounder
 # x = at + b
@@ -95,29 +97,27 @@ class F:
 #     y = l
 #     2_w/3<t<3_w/3
 f0 = F(1, 0, 0, 0, 0, _w/3)
-f1 = F(1, 0, 0, _lambda/4, _w/3, 2*_w/3)
+f1 = F(1, 0, 0, fi, _w/3, 2*_w/3)
 f2 = F(1, 0, 0, 0, 2*_w/3, _w)
 f3 = F(1, 0, 0, _l, 0, _w/3)
-f4 = F(1, 0, 0, _l-_lambda/4, _w/3, 2*_w/3)
+f4 = F(1, 0, 0, _l-fi, _w/3, 2*_w/3)
 f5 = F(1, 0, 0, _l, 2*_w/3, _w)
 
 # simulation
 for i in range(_N):
     for j in range(_M):
         _x, _y = coordinate(i, j)
-        array[j][i] += wave_f(_x, _y, f0)/_M**2
-        array[j][i] += wave_f(_x, _y, f1)/_N**2
-        array[j][i] += wave_f(_x, _y, f2)/_M**2
-        array[j][i] += wave_f(_x, _y, f3)/_N**2
-        array[j][i] += wave_f(_x, _y, f4)/_M**2
-        array[j][i] += wave_f(_x, _y, f5)/_N**2
+        array[j][i] += wave_f(_x, _y, f0) / _M ** 2
+        array[j][i] += wave_f(_x, _y, f1) / _N ** 2
+        array[j][i] += wave_f(_x, _y, f2) / _M ** 2
+        array[j][i] += wave_f(_x, _y, f3) / _N ** 2
+        array[j][i] += wave_f(_x, _y, f4) / _M ** 2
+        array[j][i] += wave_f(_x, _y, f5) / _N ** 2
 
 array = array * rho * (pi * A ** 2 * w)
 
-
 # U = 2 * pi * R^3 (_p/3rhoc^2 - rho*v^2/2)
-array = 2 * pi * (np.abs(array)/(3*rho*u**2)-rho*A**2*w/2)
-
+array = 2 * pi * (np.abs(array) / (3 * rho * u ** 2) - rho * A ** 2 * w / 2)
 
 contour = plt.contourf(array)
 

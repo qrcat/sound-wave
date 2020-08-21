@@ -1,9 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-# var
-L = 5
-W = 5
 
 # const var
 pi = 3.1415926
@@ -16,6 +13,11 @@ _lambda = u / v
 w = 2 * pi * v
 T = 2 * pi / w
 rho = 1.293
+
+# var
+L = 5
+W = 5
+fi = _lambda/2
 
 
 # y = Acos(wt-2pi(sqrt(x^2+y^2+z^2))/lambda)
@@ -88,11 +90,13 @@ class F:
 # f5: x = t
 #     y = l
 #     2_w/3<t<3_w/3
+fi = _lambda/2
+
 f0 = F(1, 0, 0, 0, 0, _w/3)
-f1 = F(1, 0, 0, _lambda/4, _w/3, 2*_w/3)
+f1 = F(1, 0, 0, fi, _w/3, 2*_w/3)
 f2 = F(1, 0, 0, 0, 2*_w/3, _w)
 f3 = F(1, 0, 0, _l, 0, _w/3)
-f4 = F(1, 0, 0, _l-_lambda/4, _w/3, 2*_w/3)
+f4 = F(1, 0, 0, _l-fi, _w/3, 2*_w/3)
 f5 = F(1, 0, 0, _l, 2*_w/3, _w)
 
 # simulation
@@ -114,6 +118,6 @@ plt.colorbar(contour)
 
 plt.title("sound pressure")
 
-plt.text(1, 1, 'L={}lambda/2,W={}lambda/2'.format(L, W))
+plt.text(1, 1, 'L={}lambda/2,W={}lambda/2,fi={}'.format(L, W, fi))
 
 plt.show()
