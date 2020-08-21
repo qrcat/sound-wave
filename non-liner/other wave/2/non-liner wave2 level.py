@@ -72,20 +72,28 @@ class F:
 # wave sounder
 # f0: x = t
 #     y = 0
-#     _w/4<t<3_w/4
+#     0<t<_w/3
 # f1: x = t
+#     y = -lambda/4
+#     _w/3<t<2_w/3
+# f2: x = t
+#     y = 0
+#     2_w/3<t<_w/3
+# f3: x = t
 #     y = l
-#     _w/4<t<3_w/4
-# f3: x = 0
-#     y = t
-#     _l/4<t<3_l/4
-# f4: x = _w
-#     y = t
-#     _l/4<t<3_l/4
-f0 = F(1, 0, 0, 0, _w/4, 3*_w/4)
-f1 = F(1, 0, 0, _l, _w/4, 3*_w/4)
-f3 = F(0, 0, 1, 0, _l/4, 3*_l/4)
-f4 = F(0, _w, 1, 0, _l/4, 3*_l/4)
+#     -<t<_w/3
+# f4: x = t
+#     y = l+lambda/4
+#     _w/3<t<2_w/3
+# f5: x = t
+#     y = l
+#     2_w/3<t<3_w/3
+f0 = F(1, 0, 0, 0, 0, _w/3)
+f1 = F(1, 0, 0, _lambda/4, _w/3, 2*_w/3)
+f2 = F(1, 0, 0, 0, 2*_w/3, _w)
+f3 = F(1, 0, 0, _l, 0, _w/3)
+f4 = F(1, 0, 0, _l-_lambda/4, _w/3, 2*_w/3)
+f5 = F(1, 0, 0, _l, 2*_w/3, _w)
 
 # simulation
 for i in range(_N):
@@ -93,16 +101,25 @@ for i in range(_N):
         _x, _y = coordinate(i, j)
         array[j][i] += wave_f(_x, _y, f0)/_M**2
         array[j][i] += wave_f(_x, _y, f1)/_N**2
-        array[j][i] += wave_f(_x, _y, f3)/_M**2
-        array[j][i] += wave_f(_x, _y, f4)/_N**2
+        array[j][i] += wave_f(_x, _y, f2)/_M**2
+        array[j][i] += wave_f(_x, _y, f3)/_N**2
+        array[j][i] += wave_f(_x, _y, f4)/_M**2
+        array[j][i] += wave_f(_x, _y, f5)/_N**2
 
 array = array * rho * (pi * A ** 2 * w)
+
+
+p_rms = 2e-5
+
+array = np.abs(array)/p_rms
+
+array = 20 * np.log(array)
 
 contour = plt.contourf(array)
 
 plt.colorbar(contour)
 
-plt.title("sound pressure")
+plt.title("sound level")
 
 plt.text(1, 1, 'L={}lambda/2,W={}lambda/2'.format(L, W))
 
