@@ -19,22 +19,28 @@ rho = 1.293
 
 
 # y = Acos(wt-2pi(sqrt(x^2+y^2+z^2))/lambda)
-# v = -Awsin(wt-2pi(sqrt(x^2+y^2+z^2))/lambda)
+# v = -Awsin^2(wt-2pi(sqrt(x^2+y^2+z^2))/lambda)
+#     cos 2x = (cos x)^2 - (sin x)^2 = 1 - 2(sin x)^2
+#     (sin x)^2 = (1 - cos 2x)/2
+#     v^2 = Aw(1-cos(2wt - 4pi(r)/lambda)/2
+# integral v^2 by time
+#     @v^2 = (1/2)AwT - Awsin(4pi-4pi(r)/lambda)/4 + Awsin(-4pi(r)/lambda)/4
+#          = (1/2)AwT + Awsin(4pi(r)/lambda)/4 - Awsin(4pi(r)/lambda)/4
+#          = (1/2)AwT
 # a = -Aw^2cos(wt-2pi(sqrt(x^2+y^2+z^2))/lambda)
-# r = sqrt(x^2+y^2+z^2)
+#      r = sqrt(x^2+y^2+z^2)
 # dv/dx = 2piAwcos(wt-2pi(r)/lambda)/lambda
 # -dp/dx = rho(-Aw^2cos(wt-2pi(r)/lambda)-Awsin(wt-2pi(r)/lambda)*2piAwcos(wt-2pi(r)/lambda)/lambda)
 #        = rho(-Aw^2cos(wt-2pi(r)/lambda)-piA^2*w^2sin(2wt-4pi(r)/lambda))
 # integral by time(1T)
-# -dp/dx = rho(-Awsin(wt-2pi(r)/lambda)+(1/2)*piA^2*wcos(2wt-4pi(r)/lambda))
-#        = rho(-Awsin(-2pi(r)/lambda)+(1/2)*piA^2*wcos(4pi(r)/lambda)+Awsin(-2pi(r)/lambda)+piA^2*wcos(4pi(r)/lambda)/2)
-#        = rho(piA^2*wcos(4pi(r)/lambda))
+# @-dp/dx = rho(-Awsin(wt-2pi(r)/lambda)+(1/2)*piA^2*wcos(2wt-4pi(r)/lambda))
+#         = rho(-Awsin(-2pi(r)/lambda)+(1/2)*piA^2*wcos(4pi(r)/lambda)+Awsin(-2pi(r)/lambda)+piA^2*wcos(4pi(r)/lambda)/2)
+#         = rho(piA^2*wcos(4pi(r)/lambda))
 def wave_f(x1, y1, f):
     theta = 0
     for x, y in f.points:
         theta += np.cos(4 * pi * np.sqrt((x1 - x) ** 2 + (y1 - y) ** 2) / _lambda)
     return theta
-
 
 # length
 _l = L * _lambda / 2
@@ -53,7 +59,7 @@ def coordinate(x, y):
 
 # create zero array
 array = np.zeros((_N, _M))
-
+array_v = np.zeros((_N, _M))
 
 # non-liner sounder
 # x = at + b
@@ -88,10 +94,15 @@ for i in range(_N):
 
 array = array * rho * (pi * A ** 2 * w)
 
+
+# U = 2 * pi * R^3 (_p/3rhoc^2 - rho*v^2/2)
+array = 2 * pi * (array/(3*rho*u**2)-rho*0.5*A*w*T/2)
+
+
 contour = plt.contourf(array)
 
 plt.colorbar(contour)
 
-plt.title("sound pressure")
+plt.title("sound U")
 
 plt.show()

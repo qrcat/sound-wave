@@ -41,7 +41,7 @@ _l = L * _lambda / 2
 _w = W * _lambda / 2
 
 # degree
-_N, _M = 100, 100
+_N, _M = 50, 50
 
 
 # be in real coordinate
@@ -70,14 +70,15 @@ class F:
 
 
 # wave sounder
+# wave sounder
 # f0: x = t
 #     y = 0
 #     0<t<_w
 # f1: x = t
 #     y = l
 #     0<t<_w
-f0 = F(1, 0, 0, 0, 0, _w)
-f1 = F(1, 0, 0, _l, 0, _w)
+f0 = F(1, 0, 0, 0, _w/4, 3*_w/4)
+f1 = F(1, 0, 0, _l, _w/4, 3*_w/4)
 
 # simulation
 for i in range(_N):
@@ -98,5 +99,7 @@ array = 20 * np.log(array)
 contour = plt.contourf(array)
 
 plt.colorbar(contour)
+
+plt.title("sound level")
 
 plt.show()

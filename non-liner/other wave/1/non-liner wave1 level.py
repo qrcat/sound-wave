@@ -76,8 +76,16 @@ class F:
 # f1: x = t
 #     y = l
 #     0<t<_w
+# f3: x = 0
+#     y = t
+#     0<t<_l
+# f4: x = _w
+#     y = t
+#     0<t<_l
 f0 = F(1, 0, 0, 0, _w/4, 3*_w/4)
 f1 = F(1, 0, 0, _l, _w/4, 3*_w/4)
+f3 = F(0, 0, 1, 0, _l/4, 3*_l/4)
+f4 = F(0, _w, 1, 0, _l/4, 3*_l/4)
 
 # simulation
 for i in range(_N):
@@ -85,13 +93,22 @@ for i in range(_N):
         _x, _y = coordinate(i, j)
         array[j][i] += wave_f(_x, _y, f0)/_M**2
         array[j][i] += wave_f(_x, _y, f1)/_N**2
+        array[j][i] += wave_f(_x, _y, f3)/_M**2
+        array[j][i] += wave_f(_x, _y, f4)/_N**2
 
 array = array * rho * (pi * A ** 2 * w)
+
+
+p_rms = 2e-5
+
+array = np.abs(array)/p_rms
+
+array = 20 * np.log(array)
 
 contour = plt.contourf(array)
 
 plt.colorbar(contour)
 
-plt.title("sound pressure")
+plt.title("sound level")
 
 plt.show()
