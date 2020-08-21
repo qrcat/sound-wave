@@ -55,10 +55,7 @@ for i in range(_N):
 
 array = np.abs(array)
 
-# 填充颜色，f即filled
-plt.contourf(array)
-
-contour = plt.contour(array)
+contour = plt.contourf(array)
 
 plt.colorbar(contour)
 
