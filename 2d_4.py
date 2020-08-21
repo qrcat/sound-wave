@@ -31,6 +31,7 @@ _pi = 3.1415926
 _u = 343
 _v = 40000
 _lambda = _u / _v
+_w = 2*_pi*_v
 
 # degree
 _N, _M = 20, 20
@@ -50,8 +51,8 @@ f4 = F(1, 0, -_w)
 for i in range(_N):
     for j in range(_M):
         _x, _y = axic(i, j)
-        array[j][i] += np.cos(_pi * ((f1.distance(_x, _y)+_lambda/2-f2.distance(_x, _y))/_lambda))
-        array[j][i] += np.cos(_pi * ((f3.distance(_x, _y)+_lambda/2-f4.distance(_x, _y))/_lambda))
+        array[j][i] += np.cos(_pi * ((f1.distance(_x, _y)-f2.distance(_x, _y))/_lambda))
+        array[j][i] += np.cos(_pi * ((f3.distance(_x, _y)-f4.distance(_x, _y))/_lambda))
 
 array = np.abs(array)
 

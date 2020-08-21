@@ -31,7 +31,8 @@ _pi = 3.1415926
 # wave
 _u = 343
 _v = 40000
-_lambda = 343 / 40000
+_lambda = _u / _v
+_w = 2*_pi*_v
 
 # degree
 _N, _M = 200, 200
