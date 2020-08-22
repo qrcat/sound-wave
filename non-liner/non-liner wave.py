@@ -18,17 +18,17 @@ T = 2 * pi / w
 rho = 1.293
 
 
-# y = Acos(wt-2pi(sqrt(x^2+y^2+z^2))/lambda)
-# v = -Awsin(wt-2pi(sqrt(x^2+y^2+z^2))/lambda)
-# a = -Aw^2cos(wt-2pi(sqrt(x^2+y^2+z^2))/lambda)
+# y = Acos(wt-2pi(r)/lambda)
+# v = -Awsin(wt-2pi(r))/lambda)
+# a = -Aw^2cos(wt-2pi(r)/lambda)
 # r = sqrt(x^2+y^2+z^2)
 # dv/dx = 2piAwcos(wt-2pi(r)/lambda)/lambda
 # -dp/dx = rho(-Aw^2cos(wt-2pi(r)/lambda)-Awsin(wt-2pi(r)/lambda)*2piAwcos(wt-2pi(r)/lambda)/lambda)
 #        = rho(-Aw^2cos(wt-2pi(r)/lambda)-piA^2*w^2sin(2wt-4pi(r)/lambda))
 # integral by time(1T)
-# -dp/dx = rho(-Awsin(wt-2pi(r)/lambda)+(1/2)*piA^2*wcos(2wt-4pi(r)/lambda))
-#        = rho(-Awsin(-2pi(r)/lambda)+(1/2)*piA^2*wcos(4pi(r)/lambda)+Awsin(-2pi(r)/lambda)+piA^2*wcos(4pi(r)/lambda)/2)
-#        = rho(piA^2*wcos(4pi(r)/lambda))
+# -dp/dx =[rho(-Awsin(wt-2pi(r)/lambda)+(1/2)*piA^2*wcos(2wt-4pi(r)/lambda))]
+#             = rho(-Awsin(-2pi(r)/lambda)+(1/2)*piA^2*wcos(4pi(r)/lambda)+Awsin(-2pi(r)/lambda)-(1/2)*piA^2*wcos(4pi(r)/lambda)/2)
+#             = 0
 def wave_f(x1, y1, f):
     theta = 0
     for x, y in f.points:
