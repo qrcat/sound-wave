@@ -99,6 +99,7 @@ class FCircle:
             t_i = mini * t_split + e
             points.input(a * np.cos(t_i) + b, c * np.sin(t_i) + d, theta)
 
+
 # wave sounder
 # f0: x = t
 #     y = 0
@@ -112,8 +113,6 @@ class FCircle:
 # f4: x = _w
 #     y = t
 #     _l/4<t<3_l/4
-
-
 f0 = F(1, 0, 0, 0, _w/4, 3*_w/4)
 f1 = F(1, 0, 0, _l, _w/4, 3*_w/4)
 f3 = F(0, 0, 1, 0, _l/4, 3*_l/4)
@@ -144,6 +143,10 @@ def potential_energy(p, v_):
 
 # 声势能的计算公式
 array_U = 2 * pi * (R**3) * (array_p_2_sqrt / (3 * rho * (u**2)) - rho * array_v_2 / 2)
+
+# 梯度的计算式
+array_grad = np.gradient(array_U)
+
 
 # 声压级
 p_rms = 2e-5
@@ -181,6 +184,16 @@ contour = plt.contourf(array_U)
 plt.colorbar(contour)
 
 plt.title("Acoustic Potential Energy")
+
+plt.text(1, 1, 'L={}lambda/2,W={}lambda/2'.format(L, W))
+
+plt.show()
+
+# 声势力
+
+plt.quiver(array_grad[0], array_grad[1])
+
+plt.title("Acoustic Potential Power")
 
 plt.text(1, 1, 'L={}lambda/2,W={}lambda/2'.format(L, W))
 
