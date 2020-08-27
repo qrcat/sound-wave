@@ -103,21 +103,12 @@ class FCircle:
 # wave sounder
 # f0: x = t
 #     y = 0
-#     _w/4<t<3_w/4
+#     0<t<_w
 # f1: x = t
 #     y = l
-#     _w/4<t<3_w/4
-# f3: x = 0
-#     y = t
-#     _l/4<t<3_l/4
-# f4: x = _w
-#     y = t
-#     _l/4<t<3_l/4
+#     0<t<_w
 f0 = F(1, 0, 0, 0, _w/4, 3*_w/4)
 f1 = F(1, 0, 0, _l, _w/4, 3*_w/4)
-f3 = F(0, 0, 1, 0, _l/4, 3*_l/4)
-f4 = F(0, _w, 1, 0, _l/4, 3*_l/4)
-
 
 # 模拟
 split_time = T / _Time_Split
