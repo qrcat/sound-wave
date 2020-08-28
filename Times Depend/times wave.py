@@ -28,8 +28,8 @@ def r(x0, y0, x1=0, y1=0):
 def wave(x1, y1, times):
     global array_v_2
     ans1 = 0
-    for x, y, z in points.points:
-        ans1 += np.sin(w * times - k * (r(x, y, x1, y1)) + z)
+    for x, y, theta in points.points:
+        ans1 += np.sin(w * times - k * (r(x, y, x1, y1)) + theta)
     array_v_2[j][i] += np.square(ans1)
 
 
