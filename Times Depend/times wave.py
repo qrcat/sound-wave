@@ -29,8 +29,6 @@ def wave(x1, y1, times):
     global array_v_2
     ans1 = 0
     for x, y, z in points.points:
-        if z:
-            z = pi
         ans1 += np.sin(w * times - k * (r(x, y, x1, y1)) + z)
     array_v_2[j][i] += np.square(ans1)
 
@@ -80,7 +78,7 @@ points = Point()
 # y = ct + d
 # e < t < f
 class F:
-    def __init__(self, a, b, c, d, e, f, theta=False):
+    def __init__(self, a, b, c, d, e, f, theta=0):
         mini = (f - e) / (_W + _L)
         for t_split in range(_W + _L):
             t_i = mini * t_split + e
@@ -101,14 +99,14 @@ class FCircle:
 
 
 # wave sounder
-# f0: x = t
-#     y = 0
-#     0<t<_w
-# f1: x = t
-#     y = l
-#     0<t<_w
-f0 = F(1, 0, 0, 0, _w/4, 3*_w/4)
-f1 = F(1, 0, 0, _l, _w/4, 3*_w/4)
+# f0: x = -t
+#     y = t
+#     -_w/4<t<_w/4
+# f1: x = t+_w
+#     y = t
+#     -_w/4<t<_w/4
+f0 = F(-1, 0, 1, 0, -_w/4, _w/4)
+f1 = F(1, _w, 1, 0, -_w/4, _w/4, pi/2)
 
 # 模拟
 split_time = T / _Time_Split
