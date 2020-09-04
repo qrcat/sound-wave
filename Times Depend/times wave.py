@@ -45,7 +45,7 @@ _w = W * _lambda / 2
 _L, _W, _Time_Split = 50, 50, 50
 
 
-# 由点转换为真实坐标
+# 由点投影为真实坐标
 def coordinate(x, y):
     x = x * _w / _W
     y = y * _l / _L
@@ -99,14 +99,20 @@ class FCircle:
 
 
 # wave sounder
-# f0: x = -t
+# f0: x = t
+#     y = 0
+#     _w/4<t<3_w/4
+# f1: x = t
+#     y = l
+#     _w/4<t<3_w/4
+# f3: x = 0
 #     y = t
-#     -_w/4<t<_w/4
-# f1: x = t+_w
+#     _l/4<t<3_l/4
+# f4: x = _w
 #     y = t
-#     -_w/4<t<_w/4
-f0 = F(-1, 0, 1, 0, -_w/4, _w/4)
-f1 = F(1, _w, 1, 0, -_w/4, _w/4, pi/2)
+#     _l/4<t<3_l/4
+f0 = F(1, 0, 0, 0, 0, _w)
+
 
 # 模拟
 split_time = T / _Time_Split
@@ -124,11 +130,6 @@ array_p_2 = rho**2 * u**2 * k**2 * array_v_2
 array_v_2 /= _Time_Split
 array_p_2 /= _Time_Split
 array_p_2_sqrt = np.sqrt(array_p_2)
-
-
-def potential_energy(p, v_):
-    return
-
 
 # 声势能的计算公式
 array_U = 2 * pi * (R**3) * (array_p_2_sqrt / (3 * rho * (u**2)) - rho * array_v_2 / 2)

@@ -45,7 +45,7 @@ _h = H * _lambda / 2
 # _L 用于切细x轴
 # _W 用于切细y轴
 # _H 用于切细z轴
-_L, _W, _H, _Time_Split = 15, 15, 15, 20
+_L, _W, _H, _Time_Split = 10, 10, 10, 10
 
 
 # 由点转换为真实坐标
@@ -98,11 +98,11 @@ class F:
 # z = 0
 
 def f1(x):
-    return np.sqrt(1-np.square(x))
+    return np.sqrt(np.square(_lambda)-np.square(x))
 
 
 def f2(x):
-    return - np.sqrt(1-np.square(x))
+    return - np.sqrt(np.square(_lambda)-np.square(x))
 
 
 def g1(x, y):
@@ -113,8 +113,8 @@ def g2(x, y):
     return H*_lambda/2
 
 
-F(-1, 1, f1, f2, g1)
-F(-1, 1, f1, f2, g2)
+F(-_lambda, _lambda, f1, f2, g1)
+F(-_lambda, _lambda, f1, f2, g2)
 
 # 模拟
 split_time = T / _Time_Split
@@ -144,6 +144,8 @@ array_U = 2 * pi * (R**3) * (array_p_2_sqrt / (3 * rho * (u**2)) - rho * array_v
 
 # 梯度的计算式
 array_grad = np.gradient(array_U)
+
+print(array_grad)
 
 
 # 声压级
